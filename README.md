@@ -1,6 +1,6 @@
 # 🧪 Provably Fair VerifierForm Lib
 
-![Lines Coverage](badges/lines-coverage.svg) ![Branches Coverage](badges/branches-coverage.svg)
+![Version](badges/version.svg) ![Lines Coverage](badges/lines-coverage.svg) ![Branches Coverage](badges/branches-coverage.svg)
 
 A SvelteKit 2/Svelte 5 library that provides a reusable `VerifierForm` component for **quickly building provably fair verifiers** for crypto casino games.
 
@@ -83,13 +83,50 @@ The Dice game is the most complete demo — it shows a full result component and
 
 ## 📦 Using the Library
 
-Install from the local path while the package isn't yet published to npm:
+### Installing
+
+Install directly from GitHub, pinned to a release tag:
 
 ```bash
-pnpm install ../verifierform-lib
+pnpm add github:provably-fair-betting/verifierform-lib#v1.0.0
 ```
 
-Then import from the package name declared in `package.json`:
+This fetches the pre-built `dist/` included in the tag — no local clone or build step required. pnpm caches the result so subsequent installs are instant. The dependency is recorded in `package.json` as:
+
+```json
+"verifierform-lib": "github:provably-fair-betting/verifierform-lib#v1.0.0"
+```
+
+Other contributors only need `pnpm install` as normal, provided their GitHub account has access to the `provably-fair-betting` org and an SSH key configured.
+
+### Upgrading
+
+```bash
+pnpm add github:provably-fair-betting/verifierform-lib#v1.1.0
+```
+
+Check [CHANGELOG.md](https://github.com/provably-fair-betting/verifierform-lib/blob/main/CHANGELOG.md) for what changed between versions.
+
+### CI setup (one-time per consuming repo)
+
+GitHub Actions runners don't have SSH access to the private lib by default. Add a deploy key once:
+
+1. Generate a key pair (no passphrase):
+   ```bash
+   ssh-keygen -t ed25519 -C "verifierform-lib deploy key" -f verifierform_deploy_key
+   ```
+2. Add the **public key** (`verifierform_deploy_key.pub`) as a read-only deploy key on this repo:
+   `Settings → Deploy keys → Add deploy key`
+3. Add the **private key** contents as a secret named `VERIFIERFORM_LIB_DEPLOY_KEY` on the consuming repo:
+   `Settings → Secrets and variables → Actions → New repository secret`
+4. Add this step to the consuming repo's workflow **before** `pnpm install`:
+   ```yaml
+   - uses: webfactory/ssh-agent@v0.9.0
+     with:
+       ssh-private-key: ${{ secrets.VERIFIERFORM_LIB_DEPLOY_KEY }}
+   ```
+
+### Importing
 
 ```ts
 import { VerifierForm } from 'verifierform-lib';
