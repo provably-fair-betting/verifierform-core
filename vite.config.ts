@@ -32,6 +32,7 @@ export default defineConfig({
     ],
     coverage: {
       enabled: true,
+      provider: 'istanbul',
       reporter: ['html', 'json-summary', 'lcov'],
       include: ['**/src/lib/verifier/**'],
     },
