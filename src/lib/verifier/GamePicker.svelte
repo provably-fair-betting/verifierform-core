@@ -130,7 +130,7 @@
       {#if filtered.length === 0}
         <p class="py-4 text-center text-xs text-gray-400 dark:text-gray-500">No games found.</p>
       {:else}
-        <div class="grid max-h-64 grid-cols-4 gap-1.5 overflow-y-auto sm:grid-cols-5">
+        <div class="grid max-h-64 grid-cols-4 gap-1.5 overflow-y-auto sm:grid-cols-5" style="scrollbar-gutter: stable">
           {#each filtered as [gameId, entry] (gameId)}
             {@const isSelected = gameId === selectedGame}
             <button
