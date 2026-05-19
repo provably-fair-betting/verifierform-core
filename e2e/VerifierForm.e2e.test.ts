@@ -4,6 +4,11 @@ const CLIENT_SEED = 'ec75fca98de6f2d9';
 const SERVER_SEED = '735249f062ac025044a8523aa92e034803f02d6b75129abc97e8b1be19aab9b4';
 const BLOCK_HASH = '0000000000000000000b20f796f5421cac95c4efb06c6bbf6408d6f9b5d7b9dc';
 
+async function selectGame(page: import('@playwright/test').Page, gameName: string) {
+  await page.getByRole('button', { name: 'Select game' }).click();
+  await page.getByRole('option', { name: gameName }).click();
+}
+
 test.describe('VerifierForm E2E Tests', () => {
   test('computes result for game when all required fields are given', async ({ page }) => {
     page.goto('/');
@@ -15,8 +20,8 @@ test.describe('VerifierForm E2E Tests', () => {
       'floor(0.717253545532 * 10001) / 100 = 71.73',
     ];
 
-    const game = page.getByLabel('Select Game:');
-    await expect(game).toHaveValue('dice');
+    const gameTrigger = page.getByRole('button', { name: 'Select game' });
+    await expect(gameTrigger).toContainText('Dice');
 
     const clientSeed = page.getByLabel('Client Seed*');
     await clientSeed.fill(CLIENT_SEED);
@@ -57,8 +62,8 @@ test.describe('VerifierForm E2E Tests', () => {
   test('required fields reset when game is changed', async ({ page }) => {
     page.goto('/');
 
-    const game = page.getByLabel('Select Game:');
-    await expect(game).toHaveValue('dice');
+    const gameTrigger = page.getByRole('button', { name: 'Select game' });
+    await expect(gameTrigger).toContainText('Dice');
 
     const clientSeed = page.getByLabel('Client Seed*');
     await clientSeed.fill(CLIENT_SEED);
@@ -69,7 +74,7 @@ test.describe('VerifierForm E2E Tests', () => {
     const nonce = page.getByLabel('Nonce*');
     await nonce.fill('20');
 
-    await game.selectOption('slide');
+    await selectGame(page, 'Slide');
 
     await expect(page).toHaveURL((url) => {
       return (
