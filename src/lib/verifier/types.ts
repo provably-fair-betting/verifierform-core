@@ -60,5 +60,6 @@ export interface GameDefinition<T extends z.ZodTypeAny = z.ZodTypeAny> {
 
 export interface GameEntry {
   name: string;
+  image?: string;
   loader: () => Promise<GameDefinition>;
 }
