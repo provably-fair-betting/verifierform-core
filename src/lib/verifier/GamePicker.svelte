@@ -20,8 +20,8 @@
 
   const filtered = $derived(
     Object.entries(games).filter(([, entry]) =>
-      entry.name.toLowerCase().includes(search.toLowerCase()),
-    ),
+      entry.name.toLowerCase().includes(search.toLowerCase())
+    )
   );
 
   function pick(gameId: string) {
@@ -68,6 +68,7 @@
     onclick={toggle}
     aria-haspopup="listbox"
     aria-expanded={open}
+    aria-label="Select game"
     class="flex w-full items-center gap-3 border-b border-gray-300 bg-transparent py-2 text-left focus:border-purple-400 focus:ring-0 focus:outline-none dark:border-gray-600"
   >
     {#if selected?.image}
@@ -98,7 +99,7 @@
   <!-- Popover -->
   {#if open}
     <div
-      class="absolute top-full left-0 right-0 z-50 mt-1 rounded-lg border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-700 dark:bg-gray-900"
+      class="absolute top-full right-0 left-0 z-50 mt-1 rounded-lg border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-700 dark:bg-gray-900"
       role="listbox"
     >
       <!-- Search -->
@@ -132,46 +133,46 @@
       {:else}
         <div class="game-scroll max-h-64 overflow-y-auto pr-4">
           <div class="grid grid-cols-4 gap-1.5 sm:grid-cols-5">
-          {#each filtered as [gameId, entry] (gameId)}
-            {@const isSelected = gameId === selectedGame}
-            <button
-              type="button"
-              role="option"
-              aria-selected={isSelected}
-              onclick={() => pick(gameId)}
-              class={[
-                'group flex flex-col items-center overflow-hidden rounded-md border-2 transition-all focus:ring-2 focus:ring-purple-400 focus:outline-none',
-                isSelected
-                  ? 'border-purple-500 dark:border-purple-400'
-                  : 'border-transparent hover:border-gray-300 dark:hover:border-gray-600',
-              ]}
-            >
-              {#if entry.image}
-                <img
-                  src={entry.image}
-                  alt={entry.name}
-                  class="aspect-[3/4] w-full object-cover"
-                  loading="lazy"
-                />
-              {:else}
-                <div
-                  class="flex aspect-[3/4] w-full items-center justify-center bg-gray-100 text-lg font-bold text-gray-400 dark:bg-gray-800 dark:text-gray-600"
-                >
-                  {entry.name[0].toUpperCase()}
-                </div>
-              {/if}
-              <span
+            {#each filtered as [gameId, entry] (gameId)}
+              {@const isSelected = gameId === selectedGame}
+              <button
+                type="button"
+                role="option"
+                aria-selected={isSelected}
+                onclick={() => pick(gameId)}
                 class={[
-                  'w-full truncate px-0.5 py-0.5 text-center text-[10px] font-medium leading-tight',
+                  'group flex flex-col items-center overflow-hidden rounded-md border-2 transition-all focus:ring-2 focus:ring-purple-400 focus:outline-none',
                   isSelected
-                    ? 'bg-purple-500 text-white'
-                    : 'bg-gray-100 text-gray-600 group-hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:group-hover:bg-gray-700',
+                    ? 'border-purple-500 dark:border-purple-400'
+                    : 'border-transparent hover:border-gray-300 dark:hover:border-gray-600',
                 ]}
               >
-                {entry.name}
-              </span>
-            </button>
-          {/each}
+                {#if entry.image}
+                  <img
+                    src={entry.image}
+                    alt={entry.name}
+                    class="aspect-[3/4] w-full object-cover"
+                    loading="lazy"
+                  />
+                {:else}
+                  <div
+                    class="flex aspect-[3/4] w-full items-center justify-center bg-gray-100 text-lg font-bold text-gray-400 dark:bg-gray-800 dark:text-gray-600"
+                  >
+                    {entry.name[0].toUpperCase()}
+                  </div>
+                {/if}
+                <span
+                  class={[
+                    'w-full truncate px-0.5 py-0.5 text-center text-[10px] leading-tight font-medium',
+                    isSelected
+                      ? 'bg-purple-500 text-white'
+                      : 'bg-gray-100 text-gray-600 group-hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:group-hover:bg-gray-700',
+                  ]}
+                >
+                  {entry.name}
+                </span>
+              </button>
+            {/each}
           </div>
         </div>
       {/if}
