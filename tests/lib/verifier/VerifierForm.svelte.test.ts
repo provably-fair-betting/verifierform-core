@@ -441,7 +441,7 @@ describe('VerifierForm Component', () => {
 
   async function selectGame(user: ReturnType<typeof userEvent.setup>, gameId: string) {
     await user.click(getGameTrigger());
-    await user.click(screen.getByRole('option', { name: new RegExp(gameId, 'i') }));
+    await user.click(screen.getByRole('button', { name: new RegExp(`^${gameId}$`, 'i') }));
   }
 
   async function setupVerifierForm() {

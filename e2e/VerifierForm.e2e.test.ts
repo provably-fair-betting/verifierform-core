@@ -6,7 +6,7 @@ const BLOCK_HASH = '0000000000000000000b20f796f5421cac95c4efb06c6bbf6408d6f9b5d7
 
 async function selectGame(page: import('@playwright/test').Page, gameName: string) {
   await page.getByRole('button', { name: /^select game:/i }).click();
-  await page.getByRole('option', { name: gameName }).click();
+  await page.getByRole('button', { name: gameName, exact: true }).click();
 }
 
 test.describe('VerifierForm E2E Tests', () => {
