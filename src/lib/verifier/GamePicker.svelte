@@ -99,7 +99,7 @@
   <!-- Popover -->
   {#if open}
     <div
-      class="absolute top-full right-0 left-0 z-50 mt-1 rounded-lg border border-gray-300 bg-gray-100 p-3 shadow-lg dark:border-gray-600 dark:bg-gray-900"
+      class="absolute top-full right-0 left-0 z-50 mt-1 rounded-lg border border-gray-400 bg-gray-100 p-3 shadow-2xl dark:border-gray-600 dark:bg-gray-900"
       role="group"
       aria-label="Game selection"
     >
