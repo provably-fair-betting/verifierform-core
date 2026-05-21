@@ -145,7 +145,7 @@
                   'group flex flex-col items-center overflow-hidden rounded-md border-2 transition-all focus:ring-2 focus:ring-purple-400 focus:outline-none',
                   isSelected
                     ? 'border-purple-500 dark:border-purple-400'
-                    : 'border-transparent hover:border-gray-300 dark:hover:border-purple-400',
+                    : 'border-transparent',
                 ]}
               >
                 {#if entry.image}
