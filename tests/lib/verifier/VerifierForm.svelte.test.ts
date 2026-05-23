@@ -78,8 +78,7 @@ describe('VerifierForm Component', () => {
     test('url query params are loaded into state', async () => {
       await setupVerifierForm();
 
-      const game = screen.getByLabelText(/Select Game:/);
-      expect(game).toHaveValue('dice');
+      expect(getGameTrigger()).toHaveTextContent('dice');
 
       const clientSeed = screen.getByLabelText(/Client Seed\*/);
       expect(clientSeed).toHaveValue('123');
@@ -98,8 +97,7 @@ describe('VerifierForm Component', () => {
 
       await setupVerifierForm();
 
-      const game = screen.getByLabelText(/Select Game:/);
-      expect(game).toHaveValue('roulette');
+      expect(getGameTrigger()).toHaveTextContent('roulette');
 
       const clientSeed = screen.getByLabelText(/Client Seed\*/);
       expect(clientSeed).toHaveValue('123');
@@ -116,8 +114,7 @@ describe('VerifierForm Component', () => {
 
       await setupVerifierForm();
 
-      const game = screen.getByLabelText(/Select Game:/);
-      expect(game).toHaveValue('crash');
+      expect(getGameTrigger()).toHaveTextContent('Crash');
 
       const gameHash = screen.getByLabelText(/Game Hash\*/);
       expect(gameHash).toHaveValue('123');
@@ -128,10 +125,9 @@ describe('VerifierForm Component', () => {
     });
 
     test('state changes propagate to url query params', async () => {
-      const { user } = await setupVerifierForm();
+      await setupVerifierForm();
 
-      const game = screen.getByLabelText(/Select Game:/);
-      expect(game).toHaveValue('dice');
+      expect(getGameTrigger()).toHaveTextContent('dice');
 
       const clientSeed = screen.getByLabelText(/Client Seed\*/);
       await fireEvent.input(clientSeed, { target: { value: 'abc' } });
@@ -160,8 +156,7 @@ describe('VerifierForm Component', () => {
         new URL('http://localhost:8080/?game=dice&clientseed=999&serverseed=012&nonce=5')
       );
 
-      const game = screen.getByLabelText(/Select Game:/);
-      expect(game).toHaveValue('dice');
+      expect(getGameTrigger()).toHaveTextContent('dice');
 
       const clientSeed = screen.getByLabelText(/Client Seed\*/);
       expect(clientSeed).toHaveValue('999');
@@ -261,8 +256,7 @@ describe('VerifierForm Component', () => {
     await user.clear(optional);
     await user.type(optional, 'yes');
 
-    const game = screen.getByLabelText(/Select Game:/);
-    await user.selectOptions(game, 'roulette');
+    await selectGame(user, 'roulette');
     // changeGame is async (activeDefinition + formValues update in separate batches)
     await waitFor(() => expect(gotoSpy).toHaveBeenCalledOnce());
     await tick(); // flush activeDefinition batch
@@ -273,7 +267,7 @@ describe('VerifierForm Component', () => {
     await navigateTo(new URL('http://localhost:8080/?game=roulette&nonce=0'));
 
     // Re-query after game change — controls are recreated by the loading state transition
-    expect(game).toHaveValue('roulette');
+    expect(getGameTrigger()).toHaveTextContent('roulette');
     expect(screen.getByLabelText(/Client Seed\*/)).toHaveValue('');
     expect(screen.getByLabelText(/Server Seed\*/)).toHaveValue('');
     expect(screen.getByLabelText(/Nonce\*/)).toHaveValue(0);
@@ -297,8 +291,7 @@ describe('VerifierForm Component', () => {
 
     await setupVerifierForm();
 
-    const game = screen.getByLabelText(/Select Game:/);
-    expect(game).toHaveValue('slide');
+    expect(getGameTrigger()).toHaveTextContent('Slide');
 
     const slidehash = screen.getByLabelText(/Slide Hash\*/);
     expect(slidehash).toHaveValue('123');
@@ -339,7 +332,7 @@ describe('VerifierForm Component', () => {
 
       await navigateTo(new URL('http://localhost:8080/?game=plinko&rows=16'));
 
-      let rows = screen.getByLabelText(/Rows\*/);
+      const rows = screen.getByLabelText(/Rows\*/);
 
       //rows is present
       expect(rows).toBeInTheDocument();
@@ -385,8 +378,7 @@ describe('VerifierForm Component', () => {
       // set default values
       await navigateTo(new URL('http://localhost:8080/?game=plinko'));
 
-      const game = screen.getByLabelText(/Select Game:/);
-      expect(game).toHaveValue('plinko');
+      expect(getGameTrigger()).toHaveTextContent('plinko');
 
       const risk = screen.getByLabelText(/Risk/);
       expect(risk).toHaveValue('low');
@@ -404,8 +396,7 @@ describe('VerifierForm Component', () => {
     test('game change', async () => {
       const { user } = await setupVerifierForm();
 
-      const game = screen.getByLabelText(/Select Game:/);
-      await user.selectOptions(game, 'plinko');
+      await selectGame(user, 'plinko');
       await tick();
 
       const risk = screen.getByLabelText(/Risk/);
@@ -431,19 +422,27 @@ describe('VerifierForm Component', () => {
     //navigate to url having empty param - check before advancing timers
     //because formValues won't include the empty param, and this should be stable
     pageStateRef.current.url = new URL('http://localhost:8080/?game=dice&clientseed=&nonce=0');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await afterNavigateCallbackRef?.current?.({
       from: { url: new URL('http://localhost:8080/?game=dice&nonce=0') },
       to: { url: new URL('http://localhost:8080/?game=dice&clientseed=&nonce=0') },
       willUnload: false,
       type: 'link',
       complete: Promise.resolve(),
-    } as any);
+    } as unknown as AfterNavigate);
     await tick();
 
     //goto will not be called since urls are the same
     expect(gotoSpy).toHaveBeenCalledTimes(0);
   });
+
+  function getGameTrigger() {
+    return screen.getByRole('button', { name: /^select game:/i });
+  }
+
+  async function selectGame(user: ReturnType<typeof userEvent.setup>, gameId: string) {
+    await user.click(getGameTrigger());
+    await user.click(screen.getByRole('button', { name: new RegExp(`^${gameId}$`, 'i') }));
+  }
 
   async function setupVerifierForm() {
     const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
@@ -570,14 +569,13 @@ describe('VerifierForm Component', () => {
   async function navigateTo(newUrl: URL) {
     pageStateRef.current.url = newUrl;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await afterNavigateCallbackRef?.current?.({
       from: { url: new URL('http://localhost:8080/?game=dice&clientseed=123&serverseed=456') },
       to: { url: newUrl },
       willUnload: false,
       type: 'link',
       complete: Promise.resolve(),
-    } as any);
+    } as unknown as AfterNavigate);
 
     await tick();
     await vi.advanceTimersByTimeAsync(350);

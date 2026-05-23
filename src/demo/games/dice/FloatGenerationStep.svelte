@@ -123,7 +123,7 @@
               >
                 hex
               </th>
-              {#each step.hexes as hex}
+              {#each step.hexes as hex, i (i)}
                 <td class="px-6 py-4 font-mono">{hex}</td>
               {/each}
             </tr>
@@ -134,7 +134,7 @@
               >
                 byte
               </th>
-              {#each step.bytes as byte}
+              {#each step.bytes as byte, i (i)}
                 <td class="px-6 py-4 font-mono">{byte}</td>
               {/each}
             </tr>
@@ -147,7 +147,7 @@
       <ContentBlock>
         <table class="w-full text-left text-sm">
           <tbody>
-            {#each step.bytes as byte, i}
+            {#each step.bytes as byte, i (i)}
               <tr class="border-b border-gray-300 dark:border-gray-700">
                 <td class="px-4"></td>
                 <td class="px-2 py-4">{(byte / 256 ** (i + 1)).toFixed(12)}</td>

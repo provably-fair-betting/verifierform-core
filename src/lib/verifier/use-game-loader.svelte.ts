@@ -1,7 +1,8 @@
+import { SvelteMap } from 'svelte/reactivity';
 import type { GameDefinition, GameEntry } from '$lib/verifier/types';
 
 export function useGameLoader(getGames: () => Record<string, GameEntry>) {
-  const cache = new Map<string, GameDefinition>();
+  const cache = new SvelteMap<string, GameDefinition>();
   let requestedId: string | null = null;
 
   let definition = $state<GameDefinition | undefined>();

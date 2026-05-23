@@ -12,6 +12,7 @@
   } from '$lib/verifier/control-utils';
   import { effectWithPrevious } from '$lib/verifier/effect-with-previous.svelte';
   import Input from './Input.svelte';
+  import GamePicker from './GamePicker.svelte';
 
   import { page } from '$app/state';
   import { goto, afterNavigate } from '$app/navigation';
@@ -133,20 +134,7 @@
 
 <div class="mx-auto max-w-xl rounded-b-lg p-4">
   <div class="mb-7">
-    <label for="game" class="mb-1 block font-semibold text-black dark:text-white">
-      Select Game:
-    </label>
-    <select
-      id="game"
-      onchange={(e) => changeGame((e.target as HTMLSelectElement).value)}
-      class="block w-full border-0 border-b bg-transparent p-2 focus:border-purple-400 focus:ring-0 focus:outline-none dark:text-white"
-    >
-      {#each Object.entries(games) as [gameId, entry] (gameId)}
-        <option value={gameId} {...game === gameId ? { selected: true } : {}}>
-          {entry.name}
-        </option>
-      {/each}
-    </select>
+    <GamePicker {games} selectedGame={game} onselect={changeGame} />
   </div>
 
   {#if gameLoader.isLoading}

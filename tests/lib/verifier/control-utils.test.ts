@@ -12,7 +12,12 @@ import type { Control } from '$lib/verifier/types';
 
 const textControl: Control = { id: 'name', label: 'Name', type: 'text' };
 const numberControl: Control = { id: 'nonce', label: 'Nonce', type: 'number', default: 0 };
-const selectControl: Control = { id: 'diff', label: 'Difficulty', type: 'select', options: ['easy', 'hard'] };
+const selectControl: Control = {
+  id: 'diff',
+  label: 'Difficulty',
+  type: 'select',
+  options: ['easy', 'hard'],
+};
 const hiddenControl: Control = { id: 'token', type: 'hidden' };
 const staticControl: Control = { id: 'hash', label: 'Hash', type: 'static', value: 'abc' };
 
@@ -61,15 +66,21 @@ describe('shallowEqual', () => {
 
 describe('areSearchParamsEqual', () => {
   it('returns true for identical params', () => {
-    expect(areSearchParamsEqual(new URLSearchParams('a=1&b=2'), new URLSearchParams('a=1&b=2'))).toBe(true);
+    expect(
+      areSearchParamsEqual(new URLSearchParams('a=1&b=2'), new URLSearchParams('a=1&b=2'))
+    ).toBe(true);
   });
 
   it('returns false when lengths differ', () => {
-    expect(areSearchParamsEqual(new URLSearchParams('a=1'), new URLSearchParams('a=1&b=2'))).toBe(false);
+    expect(areSearchParamsEqual(new URLSearchParams('a=1'), new URLSearchParams('a=1&b=2'))).toBe(
+      false
+    );
   });
 
   it('returns false when values differ', () => {
-    expect(areSearchParamsEqual(new URLSearchParams('a=1'), new URLSearchParams('a=2'))).toBe(false);
+    expect(areSearchParamsEqual(new URLSearchParams('a=1'), new URLSearchParams('a=2'))).toBe(
+      false
+    );
   });
 });
 
@@ -121,7 +132,11 @@ describe('resolveFormValues', () => {
   });
 
   it('falls back to first option when select value is invalid', () => {
-    const result = resolveFormValues(new URLSearchParams('game=dice&diff=invalid'), controls, false);
+    const result = resolveFormValues(
+      new URLSearchParams('game=dice&diff=invalid'),
+      controls,
+      false
+    );
     expect(result.diff).toBe('easy');
   });
 
