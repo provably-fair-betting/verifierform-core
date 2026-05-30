@@ -158,7 +158,7 @@
                     <div
                       class={[
                         'absolute inset-0 transition-colors duration-150',
-                        isSelected ? 'bg-purple-500/40' : 'bg-transparent group-hover:bg-black/30',
+                        isSelected ? 'bg-purple-500/40' : 'bg-transparent group-hover:bg-black/20',
                       ]}
                     />
                     {#if isSelected}
