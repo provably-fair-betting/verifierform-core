@@ -19,9 +19,9 @@
   const selected = $derived(games[selectedGame]);
 
   const filtered = $derived(
-    Object.entries(games).filter(([, entry]) =>
-      entry.name.toLowerCase().includes(search.toLowerCase())
-    )
+    Object.entries(games)
+      .filter(([, entry]) => entry.name.toLowerCase().includes(search.toLowerCase()))
+      .sort(([a], [b]) => (a === selectedGame ? -1 : b === selectedGame ? 1 : 0))
   );
 
   function pick(gameId: string) {
@@ -142,19 +142,50 @@
                 onclick={() => pick(gameId)}
                 class={[
                   'group flex flex-col items-center overflow-hidden rounded-md border-2 transition-all focus:ring-2 focus:ring-purple-400 focus:outline-none',
-                  isSelected ? 'border-purple-500 dark:border-purple-400' : 'border-transparent',
+                  isSelected
+                    ? 'border-purple-500 dark:border-purple-400'
+                    : 'border-transparent hover:border-purple-300 dark:hover:border-purple-600',
                 ]}
               >
                 {#if entry.image}
-                  <img
-                    src={entry.image}
-                    alt={entry.name}
-                    class="aspect-[3/4] w-full object-cover"
-                    loading="lazy"
-                  />
+                  <div class="relative w-full">
+                    <img
+                      src={entry.image}
+                      alt={entry.name}
+                      class="aspect-3/4 w-full object-cover"
+                      loading="lazy"
+                    />
+                    <div
+                      class={[
+                        'absolute inset-0 transition-colors duration-150',
+                        isSelected ? 'bg-purple-500/40' : 'bg-transparent group-hover:bg-black/20',
+                      ]}
+                    />
+                    {#if isSelected}
+                      <div class="absolute inset-0 flex items-center justify-center">
+                        <div
+                          class="flex h-7 w-7 items-center justify-center rounded-full bg-purple-600 shadow-lg ring-1 ring-purple-900"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            class="h-4 w-4 text-white"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    {/if}
+                  </div>
                 {:else}
                   <div
-                    class="flex aspect-[3/4] w-full items-center justify-center bg-gray-100 text-lg font-bold text-gray-400 dark:bg-gray-800 dark:text-gray-600"
+                    class="flex aspect-3/4 w-full items-center justify-center bg-gray-100 text-lg font-bold text-gray-400 dark:bg-gray-800 dark:text-gray-600"
                   >
                     {entry.name[0].toUpperCase()}
                   </div>
