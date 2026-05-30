@@ -1,5 +1,36 @@
 # Changelog
 
+## [2.1.0](https://github.com/provably-fair-betting/verifierform-core/compare/v2.0.0...v2.1.0) (2026-05-30)
+
+
+### Features
+
+* add dark purple ring outline to selected checkmark circle ([4b926c5](https://github.com/provably-fair-betting/verifierform-core/commit/4b926c5d4b9578ca422263d0754aef538455081f))
+* add purple overlay on game tiles for hover and selected states ([20f794a](https://github.com/provably-fair-betting/verifierform-core/commit/20f794a1dc8fe02c33445df142aa32ea382d8b96))
+* add purple overlay on game tiles for hover and selected states ([5b69137](https://github.com/provably-fair-betting/verifierform-core/commit/5b69137453b938983081e085362647efc8655531))
+* reduce hover opacity, add checkmark on selected, sort selected game first ([c4e24df](https://github.com/provably-fair-betting/verifierform-core/commit/c4e24df9555e89ecd7c3b9f0d47bdcdad2c8a6ff))
+* white brightening hover overlay, purple circle checkmark for selected ([e58f7fc](https://github.com/provably-fair-betting/verifierform-core/commit/e58f7fc28c05a362ebf851d2dc473af2c39b6e9b))
+
+
+### Bug Fixes
+
+* lighten hover tint to bg-black/20 ([0d92af6](https://github.com/provably-fair-betting/verifierform-core/commit/0d92af6c809fc7b770d453792504952c5b571f62))
+* prettier formatting in GamePicker.svelte ([bf7a7ad](https://github.com/provably-fair-betting/verifierform-core/commit/bf7a7adaec4da5096fa5dc9e8dc7aecb228ad135))
+* reduce circle ring to ring-1 ([b27f6aa](https://github.com/provably-fair-betting/verifierform-core/commit/b27f6aaa5bb03054c5cc0a69e4e4b907ce1130d0))
+* use dark tint for hover overlay instead of white ([c7576b9](https://github.com/provably-fair-betting/verifierform-core/commit/c7576b976b0a9353be2fd2c3f3700cf5986d3c5f))
+
+
+### Documentation
+
+* fix prettier formatting in README ([7afe10b](https://github.com/provably-fair-betting/verifierform-core/commit/7afe10bbf50bb3a03f656545a833eefcbb79b170))
+* remove boilerplate Built With section from README ([a3ede60](https://github.com/provably-fair-betting/verifierform-core/commit/a3ede60afbe90bb2b2067174a885c50d97dd97f0))
+* remove boilerplate Built With section from README ([61f58c2](https://github.com/provably-fair-betting/verifierform-core/commit/61f58c2fb1b4e5ac88651ce36e29bb7521572a5a))
+
+
+### Tests
+
+* add GamePicker unit tests for full line and function coverage ([82b399c](https://github.com/provably-fair-betting/verifierform-core/commit/82b399cc7374bc1895dfe09ed0fa82c76cb0423b))
+
 ## [2.0.0](https://github.com/provably-fair-betting/verifierform-core/compare/v1.1.0...v2.0.0) (2026-05-29)
 
 
