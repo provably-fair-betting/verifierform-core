@@ -142,7 +142,9 @@
                 onclick={() => pick(gameId)}
                 class={[
                   'group flex flex-col items-center overflow-hidden rounded-md border-2 transition-all focus:ring-2 focus:ring-purple-400 focus:outline-none',
-                  isSelected ? 'border-purple-500 dark:border-purple-400' : 'border-transparent',
+                  isSelected
+                    ? 'border-purple-500 dark:border-purple-400'
+                    : 'border-transparent hover:border-purple-300 dark:hover:border-purple-600',
                 ]}
               >
                 {#if entry.image}
@@ -158,24 +160,26 @@
                         'absolute inset-0 transition-colors duration-150',
                         isSelected
                           ? 'bg-purple-500/40'
-                          : 'bg-transparent group-hover:bg-purple-500/20',
+                          : 'bg-transparent group-hover:bg-white/20',
                       ]}
                     />
                     {#if isSelected}
                       <div class="absolute inset-0 flex items-center justify-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          class="h-6 w-6 text-white drop-shadow"
-                          aria-hidden="true"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
-                            clip-rule="evenodd"
-                          />
-                        </svg>
+                        <div class="flex h-7 w-7 items-center justify-center rounded-full bg-purple-600 shadow-lg">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            class="h-4 w-4 text-white"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </div>
                       </div>
                     {/if}
                   </div>
