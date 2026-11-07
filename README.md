@@ -287,3 +287,7 @@ pnpm build
 ```
 
 Outputs to `dist/`. The entry point is `dist/index.js` with type declarations at `dist/index.d.ts`. Run `publint` automatically as part of the build to verify the package exports are correctly declared.
+
+## License
+
+[MIT](./LICENSE)

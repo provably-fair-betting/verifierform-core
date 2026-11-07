@@ -30,7 +30,8 @@ jobs:
         run: pnpm lint
 
   test:
-    runs-on: ubuntu-latest
+    # Pinned: Playwright 1.58 cannot install browsers on ubuntu-latest (26.04).
+    runs-on: ubuntu-24.04
     if: ${{ !startsWith(github.head_ref, 'release-please--') }}
 
     steps:
