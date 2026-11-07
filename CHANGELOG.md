@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.1.1](https://github.com/provably-fair-betting/verifierform-core/compare/v2.1.0...v2.1.1) (2026-11-07)
+
+
+### Chores
+
+* Add MIT license ([908789f](https://github.com/provably-fair-betting/verifierform-core/commit/908789f98fb555997cd05445cc4f63137ea37942))
+* **deps:** upgrade Playwright to 1.64.1 and unpin CI runner ([8cf5f80](https://github.com/provably-fair-betting/verifierform-core/commit/8cf5f80926a6fe42a5aa72082c2b87172cb3ac42))
+* **deps:** upgrade Playwright to 1.64.1 and unpin CI runner ([011ee50](https://github.com/provably-fair-betting/verifierform-core/commit/011ee50ab3943357fd538c0dd563b3cde9c52d08))
+
 ## [2.1.0](https://github.com/provably-fair-betting/verifierform-core/compare/v2.0.0...v2.1.0) (2026-05-30)
 
 
